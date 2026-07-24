@@ -17,5 +17,5 @@
     "mssql": "^12.2.0"
   },
   "devDependencies": {},
-  "type": "commonjs"
+  "type": "module"
 }

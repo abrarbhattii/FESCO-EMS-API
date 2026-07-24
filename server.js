@@ -18,10 +18,10 @@ dotenv.config();
 const dbConfig = {
     user: process.env.DB_USER,
     password: process.env.DB_PASS,
-    server: "localhost",
+    server: process.env.SERVER,
     database: process.env.DB_NAME,
     options: {
-        encrypt: false,
+        encrypt: true,
         trustServerCertificate: true
     }
 };
@@ -40,9 +40,9 @@ app.get("/api/circles", async (req, res) => {
         res.json(result.recordset); // response
         console.log("result returned..");
     } catch (err) {
-        console.error(err);
-        res.status(500).json({
-            error: "DB error"
+        console.error("err: ", err);
+        res.status(500).json({  
+            error: "DB error 1jjj1"
         });
     }
 });
@@ -187,34 +187,6 @@ app.get("/api/feeders/:station_id", async (req, res) => {
         });
     }
 });
-
-
-// API route - calling SP (layers based on feeder id)
-app.get("/api/layers/:feeder_id", async (req, res) => {
-    try {
-        const feederId = parseInt(req.params.feeder_id);
-
-        // console.log("req.params: ", req.params);
-        // console.log("feeder_id: ", feederId);
-
-        const pool = await mssql.connect(dbConfig); // pool
-        
-        const result = await pool.request()
-        .input("feeder_id", mssql.Int, feederId) // PARAM
-        .execute("sp_GetLayersByFeeder"); // our SP
-
-        // console.log("result: ", result);
-        
-        res.json(result.recordset); // response
-        console.log("result returned..");
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({
-            error: "DB error"
-        });
-    }
-});
-
 
 // API route - calling SP (HTlayers based on feeder id)
 app.get("/api/HTLayers/:feeder_id", async (req, res) => {
