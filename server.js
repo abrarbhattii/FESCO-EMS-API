@@ -22,7 +22,7 @@ const dbConfig = {
     database: process.env.DB_NAME,
     options: {
         encrypt: true,
-        trustServerCertificate: true
+        trustServerCertificate: false
     }
 };
 
