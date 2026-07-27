@@ -22,7 +22,7 @@ const dbConfig = {
     database: process.env.DB_NAME,
     options: {
         encrypt: true,
-        trustServerCertificate: false
+        trustServerCertificate: Boolean(process.env.CERT_T_F)
     }
 };
 
@@ -218,5 +218,5 @@ app.get("/api/HTLayers/:feeder_id", async (req, res) => {
 // starting server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log("app is listening on Port 3000")
+    console.log(`app is listening on Port ${PORT}`)
 });
